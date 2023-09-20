@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "253338075803",
+    "firebase_url": "https://sein-lae-myay.firebaseio.com",
+    "project_id": "sein-lae-myay",
+    "storage_bucket": "sein-lae-myay.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:253338075803:android:c649d020b30bf4d4317c3e",
+        "android_client_info": {
+          "package_name": "com.example.firebase_advanced"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "253338075803-2s8oqhqterodr6j08bp8pkbqe28783b6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQHfosIpSTZP22yAKha92dM2UBYrIdTkQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "253338075803-2s8oqhqterodr6j08bp8pkbqe28783b6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:253338075803:android:2b097e7322c58861317c3e",
+        "android_client_info": {
+          "package_name": "com.seinlaemyay.farmer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "253338075803-2s8oqhqterodr6j08bp8pkbqe28783b6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQHfosIpSTZP22yAKha92dM2UBYrIdTkQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "253338075803-2s8oqhqterodr6j08bp8pkbqe28783b6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
