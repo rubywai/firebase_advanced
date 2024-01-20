@@ -13,7 +13,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await init();
+  await initMessaging();
   runApp(MyApp());
 }
 
@@ -26,7 +26,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      navigatorKey: scaffoldKey,
       navigatorObservers: [FirebaseAnalyticsObserver(analytics: analytics)],
       routes: {
         '/home': (context) => const HomeScreen(),
@@ -39,6 +38,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      navigatorKey: navigatorKey,
     );
   }
 }
@@ -54,12 +54,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    requestPermission();
 
-  }
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has

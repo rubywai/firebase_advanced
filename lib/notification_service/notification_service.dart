@@ -1,57 +1,55 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-GlobalKey<NavigatorState> scaffoldKey = GlobalKey();
-final messagingInstance = FirebaseMessaging.instance;
-const _androidChannel = AndroidNotificationChannel(
+
+GlobalKey<NavigatorState> navigatorKey = GlobalKey();
+final _messagingInstance = FirebaseMessaging.instance;
+final _localNotification = FlutterLocalNotificationsPlugin();
+const _androidNotiChannel = AndroidNotificationChannel(
   'high_important_channel',
   'High important notification',
-  importance: Importance.high,
 );
-final _localNotification = FlutterLocalNotificationsPlugin();
 
-Future<void> init() async {
-  // Requesting permission for notifications
-  String? token = await messagingInstance.getToken();
-  messagingInstance.setForegroundNotificationPresentationOptions(
+Future<void> initMessaging() async {
+  String? token = await _messagingInstance.getToken();
+  _messagingInstance.requestPermission();
+  _messagingInstance.subscribeToTopic("all").then((value) {
+    print('subscribe success to all');
+  });
+
+  _messagingInstance.setForegroundNotificationPresentationOptions(
     alert: true,
     badge: true,
     sound: true,
   );
-  messagingInstance.subscribeToTopic("all").then((value){
-  });
-  await _localNotification.initialize(const InitializationSettings(
-    android: AndroidInitializationSettings("@mipmap/ic_launcher"),
-  ));
-  FirebaseMessaging.onMessage.listen((message) {
-    final notification = message.notification;
-    _localNotification.show(
-      notification.hashCode,
-      notification?.title,
-      notification?.body,
-      NotificationDetails(
-          android: AndroidNotificationDetails(
-        _androidChannel.id,
-        _androidChannel.name,
-      )),
-    );
-  });
-  FirebaseMessaging.onBackgroundMessage(onBackgroundMessage);
+
+  await _localNotification.initialize(
+    const InitializationSettings(
+      android: AndroidInitializationSettings("@mipmap/ic_launcher"),
+    ),
+  );
+
+  FirebaseMessaging.onMessage.listen(
+    (event) {
+      final notification = event.notification;
+      _localNotification.show(
+        notification.hashCode,
+        notification?.title,
+        notification?.body,
+        NotificationDetails(
+            android: AndroidNotificationDetails(
+          _androidNotiChannel.id,
+          _androidNotiChannel.name,
+        )),
+      );
+    },
+  );
   FirebaseMessaging.onMessageOpenedApp.listen((event) {
-   scaffoldKey.currentState?.pushNamed(event.data['screen']);
+    if (event.data['screen'] != null) {
+      navigatorKey.currentState?.pushNamed(
+        event.data['screen'],
+        arguments: event.data['data'],
+      );
+    }
   });
-
-}
-
-void requestPermission() {
-  messagingInstance.requestPermission();
-}
-
-void showDialog() {}
-@pragma('vm:entry-point')
-Future<void> onBackgroundMessage(RemoteMessage message) async{
-  print(message.notification?.title);
-  print(message.notification?.body);
-  print(message.data);
-
 }
