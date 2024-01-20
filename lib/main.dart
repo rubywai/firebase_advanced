@@ -1,3 +1,4 @@
+import 'package:firebase_advanced/notification_service/notification_service.dart';
 import 'package:firebase_advanced/screen/cart_screen.dart';
 import 'package:firebase_advanced/screen/home_screen.dart';
 import 'package:firebase_advanced/screen/login_screen.dart';
@@ -12,6 +13,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await init();
   runApp(MyApp());
 }
 
@@ -24,6 +26,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: scaffoldKey,
       navigatorObservers: [FirebaseAnalyticsObserver(analytics: analytics)],
       routes: {
         '/home': (context) => const HomeScreen(),
@@ -51,7 +54,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    requestPermission();
 
+  }
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
